@@ -1,0 +1,25 @@
+.formBreaker{
+  display: block;
+  margin-bottom: 15px;
+}
+
+.review-form{
+  position: relative;
+
+  width: 100%;
+
+}
+
+.add-form{
+  position: relative;
+  height: 100px;
+  width: 250px;
+}
+
+.leftButton{
+  border: 0px;
+  border-radius: 5px;
+  height: 35px;
+  font-size: 15pt;
+  float: right;
+}

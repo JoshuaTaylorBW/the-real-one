@@ -1,0 +1,20 @@
+link(rel='stylesheet', href='../stylesheets/home.css')
+link(rel='stylesheet', href='../stylesheets/show.css')
+link(rel='stylesheet', href='../stylesheets/info.css')
+link(rel='stylesheet', href='../stylesheets/add-review.css')
+
+div.header
+  h1.title Add A Review
+div.restaurants-container
+  form(type="action='/addReview/'+restaurant_id" method='POST').review-form
+    label(for="name").formBreaker Name
+    input(type="text" placeholder="Name" name="name").formBreaker
+    label(for="stars") Rating
+    input(type="radio" name="stars" value="1")
+    input(type="radio" name="stars" value="2")
+    input(type="radio" name="stars" value="3")
+    input(type="radio" name="stars" value="4")
+    input(type="radio" name="stars" value="5").formBreaker
+    label(for="review").formBreaker Review
+    input(type="textarea" name="review").formBreaker.add-form
+    input(type="submit" value="Submit").leftButton

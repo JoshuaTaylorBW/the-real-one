@@ -1,22 +1,65 @@
 |<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
 link(rel='stylesheet', href='../stylesheets/home.css')
 link(rel='stylesheet', href='../stylesheets/show.css')
+link(rel='stylesheet', href='../stylesheets/info.css')
 
-div
-  div.header
-    h1.title=allRestaurants.name
+div.header
+  h1.title=allRestaurants.name
 div.restaurants-container
   img(src=allRestaurants.url, alt="")
   div.restaurant-text
-    h2.info='type of food: ' + allRestaurants.type
-    h2.info='location: ' + allRestaurants.location
-    h2.info='description: ' + allRestaurants.description
-
-    h2.info rating: 
-      !{allRestaurants.stars}
+    h2.top-info=allRestaurants.type
+    h2.top-info='Located in ' + allRestaurants.location
+    h2.info= allRestaurants.description
+    h2.info= 'Rating: ' + allRestaurants.rating + ' stars'
     
     form(action='/edit/'+allRestaurants.id method='')
-      input.showButtons(type="submit" id="showButton1" value="edit")
+      input.showButtons.leftButton(type="submit" id="showButton1" value="Edit")
     
     form(action='/delete/'+allRestaurants.id method='')
-      input.showButtons(type="submit" id="showButton2" value="delete")
+      input.showButtons.middleButton(type="submit" id="showButton2" value="Delete")
+      
+    form(action='/addReview/'+allRestaurants.id method='')
+      input.showButtons.rightButton(type="submit" id="showButton2" value="Add Review")
+
+    div.info-container
+      form.employee-form(action='/delete/'+allRestaurants.id method='')
+        input.employeeButtons.rightButton(type="submit" id="showButton3" value="Add Employee")
+div.currentEmployees
+  table
+    tr
+      th First name
+      th Last name
+      th Position
+    tr
+      td Jane
+      td Doe
+      td Chef
+    tr
+      td Billy
+      td Bob
+      td Hostess
+    tr
+      td Michelle
+      td Smith
+      td Manager
+if firstReview
+  div.first-review
+    div.first-review-header
+      div.first-review-header-left= firstReview['users_name']
+      div.first-review-header-right= firstReview['date']
+    div.first-review-content
+      div.first-review-text= firstReview['review']
+      div.first-review-stars= firstReview['stars'] + ' stars'
+      div.first-review-link
+        a(href='/edit-review/' + firstReview['id']).first-review-edit edit
+  if secondReview
+    div.second-review
+      div.second-review-header
+        div.second-review-header-left= secondReview['users_name']
+        div.second-review-header-right= secondReview['date']
+      div.second-review-content
+        div.second-review-text= firstReview['review']
+        div.second-review-stars= firstReview['stars'] + ' stars'
+        div.second-review-link
+          a(href='/edit-review/' + secondReview['id']).first-review-edit edit

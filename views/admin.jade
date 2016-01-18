@@ -1,0 +1,13 @@
+block content
+h1 restaurants
+  if restaurants
+    for restaurant in restaurants
+      ul
+        li= restaurant.name
+        if employees
+          for employee in employees
+            ul
+              if employee.food_id == restaurant.id
+                li=employee.first_name + " " + employee.last_name
+  
+              

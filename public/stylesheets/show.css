@@ -1,20 +1,55 @@
 .restaurants-container{
-  border: 1px solid black;
-}
+    position: relative;
+    top: 0%;
+    width: 1024px;
+    height: 45%;
+    margin: auto;
+  }
 
 img{
   position: relative;
-  top: 100px;
-  width: 400px;
-  height: 300px;
+  margin: 0 auto;
+  top: 0%;
+  height: 90%;
+  width: 50%;
+
 }
 
 .restaurant-text{
-  position: absolute;
-  width: 50%;
-  left: 50%;
-  top: 0%;
+  float: right;
+  width: 40%;
+}
+
+.top-info{
+  font-size: 14pt;
+  margin: 0px;
+  color: #909090;
 }
 .info{
-  margin-bottom: 60px;
+  margin-top: 20px;
+  font-size: 14pt;
+  color: #909090;
+}
+form{
+  display: inline-block;
+  width: 33.3%;
+}
+.showButtons{
+  position: relative;
+  display: inline-block;
+  width: 90%;
+  height: 35px;
+  border: 0px;
+  font-size: 15pt;
+  border-radius: 5px;
+  font-style: italic;
+}
+.leftButton{
+  background-color: #58CC76;
+}
+.middleButton{
+  background-color: #FF5B39;
+}
+.rightButton{
+  background-color: #85AFDE;
 }

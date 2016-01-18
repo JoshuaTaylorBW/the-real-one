@@ -1,0 +1,159 @@
+.info-container{
+  position: relative;
+  top: 0%;
+  width: 1024px;
+  height: 45%;
+  margin: auto;
+  z-index: 3;
+}
+
+.info-container form{
+  margin-bottom: 0px;
+}
+
+.employee-form{
+  width: 20%;
+}
+
+.employeeButtons{
+  width: 100%;
+  font-size: 15pt;
+  border-radius: 5px;
+  font-style: italic;
+  border: 0px;
+  height: 35px;
+  margin-bottom: 0px;
+  display: block;
+}
+
+.currentEmployees{
+  position: relative;;
+  width: 35%;
+  left: 14.5%;
+  top: 5px;
+  border-radius: 5px;
+  height: calc(100% - 50px);
+  border: 2px solid #63D07E;
+  z-index: 3;
+  display: inherit;
+}
+
+.currentEmployees table{
+  position: absolute;
+  width: 100%;
+  border-collapse: collapse;
+  z-index: 2;
+  font-size: 16pt;
+  font-style: italic;
+
+}
+.currentEmployees th{
+  background-color: #E0F8E1;
+  text-align: left;
+}
+
+.currentEmployees td{
+}
+
+.info-container p{
+  margin: 0px;
+}
+.first-review{
+  position: absolute;;
+  height: 25%;
+  width: 30%;
+  display: inherit;
+  top: 56%;
+  border: 2px solid #63D07E;
+  border-radius: 5px;
+  left: 55%;
+}
+.first-review-header{
+  position: absolute;
+  top: 0%;
+  height: 24%;
+  width: 100%;
+  background-color: #E0F8E1;
+}
+.first-review-header-left{
+  float: left;
+}
+.first-review-header-right{
+  float: right;
+}
+.first-review-content{
+  position: absolute;
+  top: 25%;
+  height: 75%;
+  width: 100%;
+}
+.first-review-stars{
+  position: absolute;
+  top: 75%;
+}
+.first-review-link{
+  position: absolute;;;
+  top: 75%;
+  width: 100%;
+  float: right;
+  text-align: right;
+}
+
+.first-review-text{
+  position: relative;;
+  display: block;
+  width: 100%;
+}
+.first-review-header-left{
+  float: left;
+}
+.first-review-header-right{
+  float: right;
+}
+.second-review{
+  position: absolute;;
+  height: 25%;
+  width: 30%;
+  top: 86%;
+  display: inherit;
+  border: 2px solid #63D07E;
+  border-radius: 5px;
+  left: 55%;
+}
+
+.second-review-header{
+  position: absolute;
+  top: 0%;
+  height: 24%;
+  width: 100%;
+  background-color: #E0F8E1;
+}
+.second-review-content{
+  position: absolute;
+  top: 25%;
+  height: 75%;
+  width: 100%;
+}
+.second-review-stars{
+  position: absolute;
+  top: 75%;
+}
+.second-review-link{
+  position: absolute;;;
+  top: 75%;
+  width: 100%;
+  float: right;
+  text-align: right;
+}
+
+.second-review-text{
+  position: relative;;
+  display: block;
+  width: 100%;
+}
+.second-review-header-left{
+  float: left;
+}
+.second-review-header-right{
+  float: right;
+}

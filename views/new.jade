@@ -88,7 +88,7 @@ div
         input.form-control(type="text" name="image", id="image" placeholder="Image URL")
         
         label(for="description") description
-        input.form-control(type="textarea" name="description", id="description" placeholder="description")
+        input.form-control(type="textarea" name="description", maxlength="160" id="description" placeholder="description")
         input(type="submit" value="add")
         
       input(type="submit" value="cancel" onclick="location.href='index'")
