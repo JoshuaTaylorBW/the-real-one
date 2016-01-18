@@ -23,7 +23,7 @@ div.restaurants-container
       input.showButtons.rightButton(type="submit" id="showButton2" value="Add Review")
 
     div.info-container
-      form.employee-form(action='/delete/'+allRestaurants.id method='')
+      form.employee-form(action='/addEmployee/'+allRestaurants.id method='')
         input.employeeButtons.rightButton(type="submit" id="showButton3" value="Add Employee")
 div.currentEmployees
   table
@@ -31,18 +31,12 @@ div.currentEmployees
       th First name
       th Last name
       th Position
-    tr
-      td Jane
-      td Doe
-      td Chef
-    tr
-      td Billy
-      td Bob
-      td Hostess
-    tr
-      td Michelle
-      td Smith
-      td Manager
+    if employees
+      for employee in employees
+        tr
+          td= employee['first_name'] 
+          td= employee['last_name']
+          td= employee['position'] 
 if firstReview
   div.first-review
     div.first-review-header

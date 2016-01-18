@@ -8,13 +8,14 @@ div.header
 div.restaurants-container
   form(type="action='/addReview/'+restaurant_id" method='POST').review-form
     label(for="name").formBreaker Name
-    input(type="text" placeholder="Name" name="name").formBreaker
+    input(type="text" placeholder="Name" name="name" required).formBreaker
     label(for="stars") Rating
-    input(type="radio" name="stars" value="1")
-    input(type="radio" name="stars" value="2")
-    input(type="radio" name="stars" value="3")
-    input(type="radio" name="stars" value="4")
-    input(type="radio" name="stars" value="5").formBreaker
+    input(type="radio" name="stars" value="1" required)
+    input(type="radio" name="stars" value="2" required)
+    input(type="radio" name="stars" value="3" required)
+    input(type="radio" name="stars" value="4" required)
+    input(type="radio" name="stars" value="5" required)
+    div.formBreaker
     label(for="review").formBreaker Review
-    input(type="textarea" name="review").formBreaker.add-form
+    input(type="textarea" name="review" required).formBreaker.add-form
     input(type="submit" value="Submit").leftButton

@@ -1,0 +1,23 @@
+|<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
+link(rel='stylesheet', href='../stylesheets/home.css')
+link(rel='stylesheet', href='../stylesheets/show.css')
+link(rel='stylesheet', href='../stylesheets/info.css')
+link(rel='stylesheet', href='../stylesheets/add-review.css')
+
+
+div.header
+  h1.title Add Employee
+div.restaurants-container
+  form(type="action='/addReview/'+restaurant_id" method='POST').review-form
+    label(for="first-name").formBreaker First Name
+    input(type="text" placeholder="First Name" name="first_name" required).formBreaker
+    
+    label(for="last-name").formBreaker Last Name
+    input(type="text" placeholder="Last Name" name="last_name" required).formBreaker
+    
+    label(for="position").formBreaker Position
+    input(type="text" placeholder="Position" name="position" required).formBreaker
+    
+    div.formBreaker
+
+    input(type="submit" value="Submit").leftButton

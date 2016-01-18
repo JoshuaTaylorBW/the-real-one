@@ -169,7 +169,7 @@ app.get('/show/:id', function (req, res) {
 
         restaurants.push(thisRestaurant);
     }
-    console.log(reviews);
+    console.log(results3.rows);
     res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows});
   });
 });
@@ -180,6 +180,15 @@ app.get('/delete/:id', function (req, res) {
   // runQuery('DELETE FROM restaurants WHERE id = \''+req.params.id+"\'", function (results1) {
     res.redirect('/index')
   // })
+});
+
+app.get('/addEmployee/:id', function (req, res) {
+    res.render('add-employee')
+});
+app.post('/addEmployee/:id', function (req, res) {
+  runQuery("INSERT INTO employees VALUES(DEFAULT, '"+req.params.id+"', '"+req.body.first_name+"', '"+req.body.last_name+"', '"+req.body.position + "')", function (results) {
+    res.redirect('../show/'+req.params.id)
+  });
 });
 
 app.get('/admin', function (req, res) {
