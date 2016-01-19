@@ -50,9 +50,9 @@ app.get('/', function (req, res) {
 
       restaurants.push(thisRestaurant);
     }
-    console.log(restaurants);
+    //console.log(restaurants);
     res.render("index", {allRestaurants:restaurants});
-  });
+    });
 })
 
 app.get('/index', function (req, res) {
