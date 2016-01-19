@@ -212,6 +212,6 @@ app.get('/admin', function (req, res) {
 });
 
 
-app.listen( 3000, function () {
+app.listen(process.env.DATABASE_URL, function () {
   console.log("starting a server on localhost:3000");
 });
