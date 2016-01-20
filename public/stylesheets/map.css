@@ -1,0 +1,10 @@
+#map{
+  position: relative;
+  margin-top: 50px;
+  margin: 50px auto;
+  height:300px;
+  width:1024px;
+  border: 2px solid #63D07E;
+  border-radius: 5px;
+
+}

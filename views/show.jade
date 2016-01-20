@@ -2,6 +2,7 @@
 link(rel='stylesheet', href='../stylesheets/home.css')
 link(rel='stylesheet', href='../stylesheets/show.css')
 link(rel='stylesheet', href='../stylesheets/info.css')
+link(rel='stylesheet', href='../stylesheets/map.css')
 
 div.header
   h1.title=allRestaurants.name
@@ -57,3 +58,14 @@ if firstReview
         div.second-review-stars= firstReview['stars'] + ' stars'
         div.second-review-link
           a(href='/edit-review/' + secondReview['id']).first-review-edit edit
+if location
+  #map
+  script(type='text/javascript').
+    var map;
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: #{location[0]}, lng: #{location[1]}},
+        zoom: 8
+      });
+    }
+  |<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDboGqFLTYWnFQDCnMPaN2yNpDXwym_14k&callback=initMap"></script>

@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'jade');
 
+var request = require('request');
+
 var router = express.Router();
 
 var connectionString = 'postgres://localhost/food';
@@ -169,8 +171,24 @@ app.get('/show/:id', function (req, res) {
 
         restaurants.push(thisRestaurant);
     }
-    console.log(results3.rows);
-    res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows});
+    var location = [];
+    var google_api = "https://maps.googleapis.com/maps/api/geocode/json?address=CA" ;
+    var my_key="&key=" + YOUR_API_KEY;
+    request(google_api+my_key, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        // var jase = JSON.parse(body);
+        // var j = jase.results[0];
+        // var lat_long = j.geometry.location;
+        // location.push(Number(lat_long.lat));
+        // location.push(Number(lat_long.lng));
+        console.log("****************" + body);
+        res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows, location:location[0]});
+      }else{
+        console.log(error);
+      }
+    })
+    console.log(location);
+
   });
 });
 });

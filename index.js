@@ -3,6 +3,7 @@ app = express();
 var pg = require('pg');
 app.use(express.static(__dirname + '/public'));
 require('dotenv').load();
+var request = require('request');
 
 var bodyParser = require('body-parser')
 app.use(bodyParser.json());
@@ -12,7 +13,11 @@ app.set('view engine', 'jade');
 
 var router = express.Router();
 
-var connectionString = 'postgres://localhost/food';
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+var connectionString = process.env.DATABASE_URL;
+var YOUR_API_KEY = 'AIzaSyDboGqFLTYWnFQDCnMPaN2yNpDXwym_14k'
 
 function runQuery (query, callback) {
   pg.connect(connectionString, function (err, client, done) {
@@ -50,7 +55,6 @@ app.get('/', function (req, res) {
 
       restaurants.push(thisRestaurant);
     }
-    console.log(restaurants);
     res.render("index", {allRestaurants:restaurants});
   });
 })
@@ -59,7 +63,6 @@ app.get('/index', function (req, res) {
   runQuery("SELECT * FROM restaurants", function (results) {
 
     var restaurants = [];
-    console.log(results.rows.length);
     for(var i = 0; i < results.rows.length; i++){
       var thisRestaurant = {
         id: results.rows[i]["id"],
@@ -79,9 +82,7 @@ app.get('/index', function (req, res) {
       thisRestaurant['stars'] = stars;
 
       restaurants.push(thisRestaurant);
-      console.log("got here");
     }
-    console.log(restaurants);
     res.render("index", {allRestaurants:restaurants});
   });
 })
@@ -91,7 +92,6 @@ app.get('/new', function (req, res) {
 });
 
 app.post('/new', function (req, res, next) {
-  console.log(req.body.name);
   runQuery("INSERT INTO restaurants VALUES(DEFAULT,'"+req.body.name+"','"+req.body.location+"','"+req.body.description+"','"+req.body.rating+"','"+req.body.cuisine+"','"+req.body.image+"')", function (results) {
     res.redirect('/index');
   });
@@ -125,13 +125,11 @@ app.get('/addReview/:id', function (req, res) {
 app.post('/addReview/:id', function (req, res) {
   var x = new Date().toJSON().slice(0,10);
   runQuery("INSERT INTO reviews VALUES(DEFAULT, '"+req.params.id+"', '"+req.body.name+"', '"+req.body.review+"', '"+req.body.stars+"', '"+x+"')", function (results) {
-    console.log(results);
     res.redirect('/index');
   });
 });
 
 app.post('/edit/:id', function (req, res, next) {
-  console.log(req.body.location);
   runQuery("UPDATE restaurants SET(name, location, description, type, url, rating)=('"+req.body.name+"','"+req.body.location+"','"+req.body.description+"','"+req.body.cuisine+"','"+req.body.image+"','"+req.body.rating+"') WHERE id = '"+ req.params.id + "'", function (results) {
     res.redirect('/index');
   });
@@ -143,37 +141,51 @@ app.get('/show/:id', function (req, res) {
     runQuery("SELECT * FROM reviews WHERE restaurants_id='"+req.params.id + "' LIMIT 2", function (results2) {
       runQuery("SELECT * FROM employees WHERE food_id='"+req.params.id + "' LIMIT 6", function (results3) {
 
-      var reviews = [];
-      for (var j = 0; j < results2.rows.length; j++) {
-        reviews.push(results2.rows[j]);
-      }
-
-      var restaurants = [];
-      for(var i = 0; i < results.rows.length; i++){
-        var thisRestaurant = {
-          id: results.rows[i]["id"],
-          name: results.rows[i]["name"],
-          location: results.rows[i]["location"],
-          description: results.rows[i]["description"],
-          rating: results.rows[i]["rating"],
-          type: results.rows[i]["type"],
-          url: results.rows[i]["url"]
+        var reviews = [];
+        for (var j = 0; j < results2.rows.length; j++) {
+          reviews.push(results2.rows[j]);
         }
 
-        var stars = "";
-        for(var i = 0; i < thisRestaurant["rating"]; i++){
-          stars += "<i class='fa fa-star'></i> "
+        var restaurants = [];
+        for(var i = 0; i < results.rows.length; i++){
+          var thisRestaurant = {
+            id: results.rows[i]["id"],
+            name: results.rows[i]["name"],
+            location: results.rows[i]["location"],
+            description: results.rows[i]["description"],
+            rating: results.rows[i]["rating"],
+            type: results.rows[i]["type"],
+            url: results.rows[i]["url"]
+          }
+
+          var stars = "";
+          for(var i = 0; i < thisRestaurant["rating"]; i++){
+            stars += "<i class='fa fa-star'></i> "
+          }
+
+          thisRestaurant['stars'] = stars;
+
+          restaurants.push(thisRestaurant);
         }
 
-        thisRestaurant['stars'] = stars;
+        var google_api = "https://maps.googleapis.com/maps/api/geocode/json?address=" + results.rows[0]["location"] ;
+        var my_key="&key=" + YOUR_API_KEY;
+        var location = [];
+        request(google_api+my_key, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            var jase = JSON.parse(body);
+            var j = jase.results[0];
+            var lat_long = j.geometry.location;
+            location.push(Number(lat_long.lat));
+            location.push(Number(lat_long.lng));
+            console.log(location[0] + " " + location[1]);
+            res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows, location:location});
 
-        restaurants.push(thisRestaurant);
-    }
-    console.log(results3.rows);
-    res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows});
+          }
+        })
+      });
+    });
   });
-});
-});
 });
 
 app.get('/delete/:id', function (req, res) {
@@ -203,15 +215,9 @@ app.get('/admin', function (req, res) {
       for(var j = 0; j < results1.rows.length; j++){
         employees.push(results1.rows[j]);
       }
-      console.log(employees);
 
       res.render("admin", {restaurants:restaurants, employees:employees});
 
     });
   });
-});
-
-
-app.listen( 3000, function () {
-  console.log("starting a server on localhost:3000");
 });
