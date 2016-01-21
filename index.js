@@ -13,10 +13,7 @@ app.set('view engine', 'jade');
 
 var router = express.Router();
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-var connectionString = process.env.DATABASE_URL;
+var connectionString = 'postgres://localhost/food';
 var YOUR_API_KEY = 'AIzaSyDboGqFLTYWnFQDCnMPaN2yNpDXwym_14k'
 
 function runQuery (query, callback) {
@@ -220,4 +217,9 @@ app.get('/admin', function (req, res) {
 
     });
   });
+});
+
+
+app.listen( 3000, function () {
+  console.log("starting a server on localhost:3000");
 });

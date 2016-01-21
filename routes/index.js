@@ -144,7 +144,7 @@ app.get('/show/:id', function (req, res) {
   runQuery("SELECT * FROM restaurants WHERE id="+req.params.id, function (results) {
     runQuery("SELECT * FROM reviews WHERE restaurants_id='"+req.params.id + "' LIMIT 2", function (results2) {
       runQuery("SELECT * FROM employees WHERE food_id='"+req.params.id + "' LIMIT 6", function (results3) {
-
+//
       var reviews = [];
       for (var j = 0; j < results2.rows.length; j++) {
         reviews.push(results2.rows[j]);
@@ -171,18 +171,19 @@ app.get('/show/:id', function (req, res) {
 
         restaurants.push(thisRestaurant);
     }
+//
     var location = [];
     var google_api = "https://maps.googleapis.com/maps/api/geocode/json?address=CA" ;
     var my_key="&key=" + YOUR_API_KEY;
     request(google_api+my_key, function (error, response, body) {
       if (!error && response.statusCode == 200) {
-        // var jase = JSON.parse(body);
-        // var j = jase.results[0];
-        // var lat_long = j.geometry.location;
-        // location.push(Number(lat_long.lat));
-        // location.push(Number(lat_long.lng));
+        var jase = JSON.parse(body);
+        var j = jase.results[0];
+        var lat_long = j.geometry.location;
+        location.push(Number(lat_long.lat));
+        location.push(Number(lat_long.lng));
         console.log("****************" + body);
-        res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows, location:location[0]});
+        res.render("show", {allRestaurants:restaurants[0], firstReview:reviews[0], secondReview:reviews[1], employees:results3.rows, location:location});
       }else{
         console.log(error);
       }
@@ -230,6 +231,6 @@ app.get('/admin', function (req, res) {
 });
 
 
-app.listen(process.env.DATABASE_URL, function () {
+app.listen(3000, function () {
   console.log("starting a server on localhost:3000");
 });
